@@ -53,7 +53,7 @@ export function TrainMap({ trains, stations, selectedTrain, onTrainSelect }: Map
   return (
     <div className="relative h-full w-full">
       {/* Map Controls */}
-      <div className="absolute top-4 right-4 z-[1000] bg-white rounded-lg shadow-lg p-3 space-y-3">
+      <div className="absolute top-2 right-2 md:top-4 md:right-4 z-[1000] bg-white rounded-lg shadow-lg p-2 md:p-3 space-y-2">
         <div>
           <label className="block text-xs font-medium text-gray-700 mb-1">Map Style</label>
           <select
@@ -67,13 +67,13 @@ export function TrainMap({ trains, stations, selectedTrain, onTrainSelect }: Map
           </select>
         </div>
         
-        <div className="space-y-2">
+        <div className="space-y-1">
           <label className="flex items-center gap-2 text-xs">
             <input
               type="checkbox"
               checked={showStations}
               onChange={(e) => setShowStations(e.target.checked)}
-              className="rounded"
+              className="rounded h-3 w-3"
             />
             Show Stations
           </label>
@@ -83,7 +83,7 @@ export function TrainMap({ trains, stations, selectedTrain, onTrainSelect }: Map
               type="checkbox"
               checked={showRoutes}
               onChange={(e) => setShowRoutes(e.target.checked)}
-              className="rounded"
+              className="rounded h-3 w-3"
             />
             Show Routes
           </label>
@@ -121,7 +121,7 @@ export function TrainMap({ trains, stations, selectedTrain, onTrainSelect }: Map
       </div>
 
       {/* Live Status Indicator */}
-      <div className="absolute top-4 left-4 z-[1000] bg-green-600 text-white px-3 py-2 rounded-lg shadow-lg">
+      <div className="absolute top-2 left-2 md:top-4 md:left-4 z-[1000] bg-green-600 text-white px-3 py-2 rounded-lg shadow-lg">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
           <span className="text-sm font-medium">LIVE</span>
