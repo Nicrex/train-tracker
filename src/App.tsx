@@ -10,17 +10,23 @@ function App() {
   const [trains, setTrains] = useState<Train[]>([]);
   const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
 
   useEffect(() => {
     // Initialize trains
     const initialTrains = generateTrains();
     setTrains(initialTrains);
     setIsLoading(false);
+    setLastUpdate(new Date());
 
-    // Update train positions every 5 seconds
+    // Update train positions every 3 seconds for more fluid movement
     const interval = setInterval(() => {
-      setTrains(currentTrains => updateTrainPositions(currentTrains));
-    }, 5000);
+      setTrains(currentTrains => {
+        const updatedTrains = updateTrainPositions(currentTrains);
+        setLastUpdate(new Date());
+        return updatedTrains;
+      });
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -31,10 +37,11 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-screen flex items-center justify-center bg-gray-50">
+      <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading train data...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent mx-auto mb-4"></div>
+          <h2 className="text-xl font-bold text-gray-800 mb-2">Loading Hungarian Railway System</h2>
+          <p className="text-gray-600">Initializing live train tracking...</p>
         </div>
       </div>
     );
@@ -43,48 +50,29 @@ function App() {
   return (
     <div className="h-screen w-screen flex bg-gray-50">
       {/* Sidebar */}
-      <div className="w-80 bg-white shadow-lg overflow-hidden flex flex-col">
-        <div className="p-4 bg-blue-600 text-white">
-          <h1 className="text-xl font-bold">TrainTracker</h1>
-          <p className="text-blue-100 text-sm">Live Hungarian Train Tracking</p>
-        </div>
+      <div className="w-96 bg-white shadow-xl overflow-hidden flex flex-col border-r border-gray-200">
+        <TrainInfoPanel
+          trains={trains}
+          selectedTrain={selectedTrain}
+          onTrainSelect={handleTrainSelect}
+        />
         
-        <div className="flex-1 p-4 overflow-hidden">
-          <TrainInfoPanel
-            trains={trains}
-            selectedTrain={selectedTrain}
-            onTrainSelect={handleTrainSelect}
-          />
-        </div>
-
-        <div className="p-4 border-t bg-gray-50">
-          <div className="text-xs text-gray-500 space-y-1">
-            <div className="flex justify-between">
-              <span>Total Trains:</span>
-              <span className="font-medium">{trains.length}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>On Time:</span>
-              <span className="font-medium text-green-600">
-                {trains.filter(t => t.status === 'on-time').length}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span>Delayed:</span>
-              <span className="font-medium text-red-600">
-                {trains.filter(t => t.status === 'delayed').length}
-              </span>
-            </div>
+        {/* Last Update Footer */}
+        <div className="px-4 py-2 bg-gray-100 border-t text-xs text-gray-500">
+          <div className="flex items-center justify-between">
+            <span>Last Update:</span>
+            <span className="font-mono">{lastUpdate.toLocaleTimeString()}</span>
           </div>
         </div>
       </div>
 
       {/* Map */}
-      <div className="flex-1">
+      <div className="flex-1 relative">
         <TrainMap
           trains={trains}
           stations={stations}
           selectedTrain={selectedTrain}
+          onTrainSelect={handleTrainSelect}
         />
       </div>
     </div>

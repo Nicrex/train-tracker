@@ -2,7 +2,7 @@ export interface Train {
   id: string;
   number: string;
   name: string;
-  type: 'express' | 'regional' | 'intercity' | 'freight';
+  type: 'express' | 'regional' | 'intercity' | 'freight' | 'railjet' | 'eurocity';
   position: {
     lat: number;
     lng: number;
@@ -13,11 +13,27 @@ export interface Train {
   delay: number;
   status: 'on-time' | 'delayed' | 'cancelled';
   nextStation: string;
-  direction: number; // degrees
+  direction: number;
   capacity: {
     total: number;
     occupied: number;
   };
+  route: RoutePoint[];
+  currentRouteIndex: number;
+  operator: string;
+  platform?: string;
+  departureTime: string;
+  arrivalTime: string;
+}
+
+export interface RoutePoint {
+  lat: number;
+  lng: number;
+  stationId?: string;
+  stationName?: string;
+  arrivalTime?: string;
+  departureTime?: string;
+  platform?: string;
 }
 
 export interface Station {
@@ -27,6 +43,8 @@ export interface Station {
     lat: number;
     lng: number;
   };
-  type: 'major' | 'regional' | 'local';
+  type: 'major' | 'regional' | 'local' | 'junction';
   platforms: number;
+  services: string[];
+  zone?: string;
 }
