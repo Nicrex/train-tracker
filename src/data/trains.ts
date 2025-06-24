@@ -4,6 +4,77 @@ import { trainRoutes } from './routes';
 // Generate comprehensive Hungarian train data
 export const generateTrains = (): Train[] => {
   const trains: Train[] = [
+    // START: New trains for Székesfehérvár
+    {
+      id: 'IC-204',
+      number: 'IC 204',
+      name: 'Balaton',
+      type: 'intercity',
+      position: { lat: 47.4644, lng: 19.0239 }, // Kelenföld
+      destination: 'Keszthely',
+      origin: 'Budapest-Déli',
+      speed: 110,
+      delay: 2,
+      status: 'on-time',
+      nextStation: 'Székesfehérvár',
+      direction: 240,
+      capacity: { total: 350, occupied: 280 },
+      route: trainRoutes['budapest-balaton'],
+      currentRouteIndex: 1,
+      operator: 'MÁV-START',
+      platform: '11',
+      departureTime: '15:05',
+      arrivalTime: '17:55'
+    },
+    {
+      id: 'R-9707',
+      number: 'R 9707',
+      name: 'Göcsej',
+      type: 'regional',
+      position: { lat: 47.18, lng: 17.5 }, 
+      destination: 'Budapest-Déli',
+      origin: 'Szombathely',
+      speed: 90,
+      delay: 0,
+      status: 'on-time',
+      nextStation: 'Veszprém',
+      direction: 95,
+      capacity: { total: 220, occupied: 150 },
+      route: [...trainRoutes['szekesfehervar-szombathely']].reverse(),
+      currentRouteIndex: 3,
+      operator: 'MÁV-START',
+      platform: '1',
+      departureTime: '14:30',
+      arrivalTime: '17:28'
+    },
+    {
+      id: 'S-440',
+      number: 'S440',
+      name: 'Local Service',
+      type: 'regional',
+      position: { lat: 47.1836, lng: 18.4253 }, // Székesfehérvár
+      destination: 'Pusztaszabolcs',
+      origin: 'Székesfehérvár',
+      speed: 55,
+      delay: 0,
+      status: 'on-time',
+      nextStation: 'Börgönd',
+      direction: 130,
+      capacity: { total: 150, occupied: 40 },
+      route: [
+        { lat: 47.1836, lng: 18.4253, stationId: 'szekesfehervar' },
+        { lat: 47.13, lng: 18.55 },
+        { lat: 47.08, lng: 18.65 },
+        { lat: 47.13, lng: 18.75, stationId: 'pusztaszabolcs' }
+      ],
+      currentRouteIndex: 0,
+      operator: 'MÁV-START',
+      platform: '8',
+      departureTime: '16:10',
+      arrivalTime: '16:55'
+    },
+    // END: New trains for Székesfehérvár
+    
     // International Trains
     {
       id: 'RJ-60',
@@ -46,27 +117,6 @@ export const generateTrains = (): Train[] => {
       platform: '8',
       departureTime: '08:40',
       arrivalTime: '19:15'
-    },
-    {
-      id: 'RJ-42',
-      number: 'RJ 42',
-      name: 'Lehár Ferenc',
-      type: 'railjet',
-      position: { lat: 47.72, lng: 17.0 },
-      destination: 'Budapest-Keleti',
-      origin: 'Wien Hauptbahnhof',
-      speed: 150,
-      delay: 2,
-      status: 'on-time',
-      nextStation: 'Győr',
-      direction: 90,
-      capacity: { total: 408, occupied: 250 },
-      route: [...trainRoutes['budapest-gyor-vienna']].reverse(),
-      currentRouteIndex: 3,
-      operator: 'MÁV-START',
-      platform: '5',
-      departureTime: '10:15',
-      arrivalTime: '12:50'
     },
 
     // Intercity Trains
@@ -154,27 +204,6 @@ export const generateTrains = (): Train[] => {
       departureTime: '07:40',
       arrivalTime: '10:15'
     },
-    {
-      id: 'IC-908',
-      number: 'IC 908',
-      name: 'Tokaj',
-      type: 'intercity',
-      position: { lat: 47.75, lng: 19.9 },
-      destination: 'Budapest-Keleti',
-      origin: 'Miskolc-Tiszai',
-      speed: 95,
-      delay: 0,
-      status: 'on-time',
-      nextStation: 'Hatvan',
-      direction: 225,
-      capacity: { total: 420, occupied: 310 },
-      route: [...trainRoutes['budapest-miskolc']].reverse(),
-      currentRouteIndex: 2,
-      operator: 'MÁV-START',
-      platform: '7',
-      departureTime: '13:00',
-      arrivalTime: '15:35'
-    },
 
     // Regional Trains
     {
@@ -239,27 +268,6 @@ export const generateTrains = (): Train[] => {
       platform: '3',
       departureTime: '14:30',
       arrivalTime: '17:15'
-    },
-    {
-      id: 'R-8104',
-      number: 'R 8104',
-      name: 'Mecsek',
-      type: 'regional',
-      position: { lat: 46.5, lng: 18.25 },
-      destination: 'Budapest-Déli',
-      origin: 'Pécs',
-      speed: 60,
-      delay: 1,
-      status: 'on-time',
-      nextStation: 'Dombóvár',
-      direction: 45,
-      capacity: { total: 180, occupied: 100 },
-      route: [...trainRoutes['budapest-pecs']].reverse(),
-      currentRouteIndex: 1,
-      operator: 'MÁV-START',
-      platform: '3',
-      departureTime: '11:50',
-      arrivalTime: '14:40'
     },
 
     // Express Trains
@@ -328,27 +336,6 @@ export const generateTrains = (): Train[] => {
       departureTime: '10:30',
       arrivalTime: '14:15'
     },
-    {
-      id: 'F-5678',
-      number: 'F 5678',
-      name: 'Grain Express',
-      type: 'freight',
-      position: { lat: 46.7, lng: 19.8 },
-      destination: 'Budapest-Ferencváros',
-      origin: 'Szeged-Rókus',
-      speed: 55,
-      delay: 10,
-      status: 'delayed',
-      nextStation: 'Kecskemét',
-      direction: 340,
-      capacity: { total: 0, occupied: 0 },
-      route: [...trainRoutes['budapest-szeged']].reverse().slice(1),
-      currentRouteIndex: 2,
-      operator: 'Rail Cargo Hungaria',
-      platform: '',
-      departureTime: '09:00',
-      arrivalTime: '12:30'
-    },
 
     // Additional Regional Services
     {
@@ -388,4 +375,75 @@ export const generateTrains = (): Train[] => {
       capacity: { total: 180, occupied: 110 },
       route: [...trainRoutes['budapest-pecs']].reverse(),
       currentRouteIndex: 5,
-      operator: 'M
+      operator: 'MÁV-START',
+      platform: '2',
+      departureTime: '16:20',
+      arrivalTime: '18:45'
+    }
+  ];
+
+  return trains;
+};
+
+// Enhanced real-time position updates following actual routes
+export const updateTrainPositions = (trains: Train[]): Train[] => {
+  return trains.map(train => {
+    const route = train.route;
+    if (!route || route.length === 0) return train;
+
+    let newIndex = train.currentRouteIndex;
+    let newPosition = train.position;
+
+    // Calculate movement based on speed
+    const speedKmh = train.speed;
+    const speedMs = speedKmh / 3.6; // Convert to m/s
+    const distancePerUpdate = (speedMs * 5) / 1000; // 5 second updates, convert to km
+
+    // Get current and next route points
+    const currentPoint = route[train.currentRouteIndex];
+    const nextPoint = route[train.currentRouteIndex + 1];
+
+    if (nextPoint) {
+      // Calculate distance to next point
+      const latDiff = nextPoint.lat - currentPoint.lat;
+      const lngDiff = nextPoint.lng - currentPoint.lng;
+      const distance = Math.sqrt(latDiff * latDiff + lngDiff * lngDiff) * 111; // Rough km conversion
+
+      // Calculate direction
+      const direction = Math.atan2(lngDiff, latDiff) * 180 / Math.PI;
+
+      // Move towards next point
+      if (distance > distancePerUpdate) {
+        const ratio = distancePerUpdate / distance;
+        newPosition = {
+          lat: train.position.lat + (latDiff * ratio),
+          lng: train.position.lng + (lngDiff * ratio)
+        };
+      } else {
+        // Reached next point, move to it
+        newPosition = { lat: nextPoint.lat, lng: nextPoint.lng };
+        newIndex = Math.min(train.currentRouteIndex + 1, route.length - 1);
+      }
+
+      return {
+        ...train,
+        position: newPosition,
+        currentRouteIndex: newIndex,
+        direction: direction,
+        // Randomly update delay
+        delay: Math.max(0, train.delay + (Math.random() - 0.7) * 2),
+        status: train.delay > 5 ? 'delayed' : 'on-time',
+        // Update capacity occasionally
+        capacity: {
+          ...train.capacity,
+          occupied: Math.min(
+            train.capacity.total, 
+            Math.max(0, train.capacity.occupied + Math.floor((Math.random() - 0.5) * 15))
+          )
+        }
+      };
+    }
+
+    return train;
+  });
+};
