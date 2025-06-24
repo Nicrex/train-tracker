@@ -48,11 +48,12 @@ function App() {
   }
 
   return (
-    <div className="h-screen w-screen flex bg-gray-50">
+    <div className="h-screen w-screen flex flex-col lg:flex-row bg-gray-50 overflow-hidden">
       {/* Sidebar */}
-      <div className="w-96 bg-white shadow-xl overflow-hidden flex flex-col border-r border-gray-200">
+      <div className="w-full lg:w-96 lg:h-full bg-white shadow-xl flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 flex-shrink-0" style={{ height: '50vh' }}>
         <TrainInfoPanel
           trains={trains}
+          stations={stations}
           selectedTrain={selectedTrain}
           onTrainSelect={handleTrainSelect}
         />
@@ -67,7 +68,7 @@ function App() {
       </div>
 
       {/* Map */}
-      <div className="flex-1 relative">
+      <div className="flex-1 relative h-full w-full">
         <TrainMap
           trains={trains}
           stations={stations}
